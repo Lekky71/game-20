@@ -11,6 +11,9 @@ const sessionBody = {
   playerTwo: {
     type: Sequelize.STRING,
   },
+  hint: {
+    type: Sequelize.STRING,
+  },
   answer: {
     type: Sequelize.STRING,
     allowNull: false

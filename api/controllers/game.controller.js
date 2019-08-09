@@ -7,43 +7,39 @@ class GameController {
     this.billService = service;
   }
 
-  static validateFile(fileType) {
-    return fileType === 'text/csv';
-  }
-
-  handleStartGameSession(req, res) {
+  startGameSession(req, res) {
+  //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
 
   }
 
-  receiveFile(req, res) {
-    this.logger.info(req.files);
-    if (!req.files) {
-      return Response.failure(res, {message: 'timetable file is required'}, HttpStatus.BAD_REQUEST);
-    }
+  joinGameSession(req, res) {
+    //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
 
-    const {timetable_file} = req.files;
-    if (!timetable_file) {
-      return Response.failure(res, {message: 'timetable file is required'}, HttpStatus.BAD_REQUEST);
-    }
+  }
 
-    if (!GameController.validateFile(timetable_file.type)) {
-      return Response.failure(res, {message: 'file is not a csv file'}, HttpStatus.BAD_REQUEST);
-    }
+  receiveSessionAnswer(req, res) {
+    //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
 
-    this.billService.handleFileData(`${timetable_file.path}`)
-      .then(result => {
-        if (!result) {
-          return Response.failure(res, {message: result}, HttpStatus.BAD_REQUEST);
-        }
-        const paths = result.toString().split('/');
-        const fileUrl = `/output/${paths[paths.length - 1]}`;
+  }
 
-        return Response.success(res, {message: fileUrl}, HttpStatus.ACCEPTED);
-      })
-      .catch(err => {
-        this.logger.error(err);
-        return Response.failure(res, {message: "An error occurred, please try again later"}, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
+  receiveHintQuestion(req, res) {
+    //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
+
+  }
+
+  receiveHintAnswer(req, res) {
+    //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
+
+  }
+
+  receiveHintAnswer(req, res) {
+    //  todo: handle in service
+    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
   }
 
 }
