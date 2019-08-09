@@ -13,7 +13,7 @@ The frontend: the csv file is uploaded and the zip file is downloaded.<br/>
 
 ##CI/CD
 Travis CI is used, build status for branch master can be found above. 
-Hosted on Heroku: https://billable-hours.herokuapp.com
+Hosted on Heroku: 
 
 To start api  
  <br/>

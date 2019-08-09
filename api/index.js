@@ -4,8 +4,8 @@ dotenv.config();
 const restify = require('restify');
 const plugins = restify.plugins;
 
-const config = require('../app/config/settings');
-const routes = require('../app/route/route');
+const config = require('./config/settings');
+const routes = require('./route/route');
 
 // service locator via dependency injection
 const serviceLocator = require('./config/di');
@@ -22,22 +22,18 @@ server.pre(restify.pre.sanitizePath());
 server.use(plugins.acceptParser(server.acceptable));
 server.use(plugins.queryParser());
 server.use(plugins.bodyParser());
-// server.use(plugins.multipartBodyParser());  // Enabling multipart
 
 // setup Routing and Error Event Handling
 routes(server, serviceLocator);
 
-server.get('/output/*', restify.plugins.serveStatic({
-  directory: __dirname.replace('app', '')
-}));
-
+const distFolder = __dirname.replace('api', 'client/dist');
 server.get('/*', restify.plugins.serveStatic({
-  directory: __dirname + '/public',
+  directory: distFolder,
   default: 'index.html'
 }));
 
 server.listen(config.port, () => {
-  logger.info(`${server.name} is listening at ${server.url}`);
+  logger.info(`${server.name} is listening on port ${config.port}`);
 });
 
 module.exports = server;

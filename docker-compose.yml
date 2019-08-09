@@ -4,12 +4,25 @@ services:
     build: .
     depends_on:
     - postgres
+    environment:
+      APP_NAME: game-20
+      PORT: 3000
+      PG_HOST: 127.0.0.1
+      PG_PORT: 5432
+      PG_USERNAME: leke
+      PG_PASSWORD: lekeleke
+      PG_DATABASE: game-20
+      PG_TABLE_SESSION: table
+      PG_TABLE_QUESTION: question
     ports:
     - "3000:3000"
-    - "9229:9229"
-    - "8080:8080"
+    - "5432:5432"
+    volumes:
+    - ./api/:/api/
+    - ./client/:/client/
 
   postgres:
     image: postgres:12-alpine
     environment:
-      POSTGRES_PASSWORD: postgres
+      PG_USERNAME: leke
+      PG_PASSWORD: lekeleke

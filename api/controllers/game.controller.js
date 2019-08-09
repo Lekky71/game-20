@@ -11,6 +11,10 @@ class GameController {
     return fileType === 'text/csv';
   }
 
+  handleStartGameSession(req, res) {
+
+  }
+
   receiveFile(req, res) {
     this.logger.info(req.files);
     if (!req.files) {

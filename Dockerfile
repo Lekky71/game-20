@@ -1,13 +1,7 @@
-FROM node:10.16.2-alpine
-EXPOSE 3000 3000
+FROM node:10
 
-WORKDIR /home/app
+COPY . .
 
-COPY package.json /home/app/
-COPY package-lock.json /home/app/
+EXPOSE 3000
 
-RUN npm install
-
-COPY . /home/app
-
-CMD npm start
+CMD ["/bin/sh", "start.sh"]
