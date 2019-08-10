@@ -9,8 +9,18 @@ class GameController {
     this.createGameParams = ["name", "answer"];
     this.joinGameParams = ["name", "sessionCode"];
     this.answerQuestionParams = ["name", "sessionCode", "answer"];
+    this.hintQuestionParams = ["name", "sessionCode", "question"];
+    this.hintAnswerParams = ["name", "sessionCode", "questionId", "answer"];
   }
 
+  // a generic function to validate input for an event
+  /**
+   *
+   * @param socket: the client's socket
+   * @param body: the object send from the client
+   * @param paramsToCheck: parameters to validate for
+   * @return {boolean}
+   */
   validateEndpoint(socket, body, paramsToCheck) {
     this.logger.info(body);
     if (!body) {
@@ -28,10 +38,11 @@ class GameController {
   };
 
   startGameSession(socket, body) {
-    if(this.validateEndpoint(socket, body, this.createGameParams)){
+    if (this.validateEndpoint(socket, body, this.createGameParams)) {
       const {name, hint, answer} = body;
       this.gameService.startGame({playerOne: name, hint, answer})
         .then(session => {
+          socket.join(session.sessionCode);
           SocketEmitter.success(socket, 'started_game', session);
         })
         .catch(error => {
@@ -40,12 +51,13 @@ class GameController {
     }
   };
 
-  joinGameSession(socket, body) {
-    if(this.validateEndpoint(socket, body, this.joinGameParams)){
+  joinGameSession(io, socket, body) {
+    if (this.validateEndpoint(socket, body, this.joinGameParams)) {
       const {name, sessionCode} = body;
-      this.gameService.joinGame({name, sessionCode})
+      this.gameService.joinGame({playerTwo: name, sessionCode})
         .then(session => {
-          SocketEmitter.success(socket, 'joined_game', session);
+          socket.join(sessionCode);
+          SocketEmitter.roomEmit(io, sessionCode, 'joined_game', session);
         })
         .catch(error => {
           SocketEmitter.failure(socket, error);
@@ -53,20 +65,46 @@ class GameController {
     }
   };
 
-  receiveSessionAnswer(socket, body) {
-    //  todo: handle in service
-    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
+  receiveSessionAnswer(io, socket, body) {
+    if (this.validateEndpoint(socket, body, this.answerQuestionParams)) {
+      const {name, sessionCode, answer} = body;
+      this.gameService.answerGame({playerTwo: name, sessionCode, answer})
+        .then(session => {
+          socket.join(sessionCode);
+          SocketEmitter.roomEmit(io, sessionCode, 'answer_received', session);
+        })
+        .catch(error => {
+          SocketEmitter.failure(socket, error);
+        })
+    }
   };
 
-  receiveHintQuestion(socket, body) {
-    //  todo: handle in service
-    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
-
+  receiveHintQuestion(io, socket, body) {
+    if (this.validateEndpoint(socket, body, this.hintQuestionParams)) {
+      const {name, sessionCode, question} = body;
+      this.gameService.askHintQuestion({ playerTwo: name, sessionCode, question })
+        .then(session => {
+          socket.join(sessionCode);
+          SocketEmitter.roomEmit(io, sessionCode, 'hint_question_received', session);
+        })
+        .catch(error => {
+          SocketEmitter.failure(socket, error);
+        })
+    }
   };
 
-  receiveHintAnswer(socket, body) {
-    //  todo: handle in service
-    return Response.success(res, {"hi": "bawo ni?"}, HttpStatus.ACCEPTED);
+  receiveHintAnswer(io, socket, body) {
+    if (this.validateEndpoint(socket, body, this.hintAnswerParams)) {
+      const {name, sessionCode, questionId, answer} = body;
+      this.gameService.answerHintQuestion({ playerOne: name, sessionCode, questionId: parseInt(questionId), answer })
+        .then(session => {
+          socket.join(sessionCode);
+          SocketEmitter.roomEmit(io, sessionCode, 'hint_answer_received', session);
+        })
+        .catch(error => {
+          SocketEmitter.failure(socket, error);
+        })
+    }
   };
 
 }

@@ -31,6 +31,11 @@ const sessionBody = {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  correct: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE
 };

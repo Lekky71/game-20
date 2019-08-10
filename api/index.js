@@ -37,7 +37,7 @@ server.get('/*', restify.plugins.serveStatic({
 const io = socketIO.listen(server.server);
 io.on('connection', (socket) => {
   logger.info('a user connected');
-  socketHandler(socket, serviceLocator);
+  socketHandler(io, socket, serviceLocator);
 });
 
 server.listen(config.port, () => {
