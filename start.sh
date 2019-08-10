@@ -5,6 +5,7 @@ npm install
 npm run build
 cd ../api
 # start the API server
-echo "Starting API server"
 npm install
+echo "Starting API server"
+
 npm start

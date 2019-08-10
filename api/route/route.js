@@ -6,6 +6,7 @@ const routes = function routes(server, serviceLocator) {
   const gameController = serviceLocator.get('gameController');
   const mainPath = '/game_api';
 
+
   const validateEndpoint = (params) => {
     return (req, res, next) => {
       if(!req.body){

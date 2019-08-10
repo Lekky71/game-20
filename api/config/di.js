@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 
 const config = require('./settings');
 const serviceLocator = require('../lib/serviceLocator');
-const BillController = require('../controllers/game.controller');
-const BillService = require('../service/bill.service');
+const GameController = require('../controllers/game.controller');
+const GameService = require('../service/game.service');
 
 const SessionModel = require('../models/session');
 const Session = SessionModel.Session;
@@ -36,20 +36,26 @@ serviceLocator.register('logger', () => {
 });
 
 /**
- * Returns a mysql connection instance.
+ * Returns a postgresql connection instance.
  */
 serviceLocator.register('sequelize', () => {
   const logger = serviceLocator.get('logger');
+  logger.info('About to create sequelize.');
+  logger.info(process.env.ENV);
 
   const sequelize = new Sequelize(config.postgresql.database, config.postgresql.username, config.postgresql.password, {
-    host: `${config.postgresql.host}:${config.postgresql.port}`,
+    host: config.postgresql.host,
+    port: config.postgresql.port,
+    logging: (msg) => logger.info(msg),
     dialect: 'postgres'
   });
 
+  logger.info('Created sequelize.');
   sequelize
     .authenticate()
     .then(() => {
       logger.info('Connection has been established successfully.');
+
       Session.init(sessionBody, {
         sequelize,
         modelName: config.postgresql.sessionTable
@@ -61,7 +67,11 @@ serviceLocator.register('sequelize', () => {
       });
 
       Session.hasMany(Question);
-      Question.belongsTo(Session);
+
+      sequelize.sync({force: false })
+        .then(() => {
+          logger.info(`tables created!`)
+        })
 
     })
     .catch(err => {
@@ -79,7 +89,8 @@ serviceLocator.register('sequelize', () => {
  */
 serviceLocator.register('gameService', (serviceLocator) => {
   const logger = serviceLocator.get('logger');
-  return new BillService(logger);
+  const sequelize = serviceLocator.get('sequelize');
+  return new GameService(logger, sequelize);
 });
 
 // CONTROLLER INSTANCES
@@ -90,7 +101,7 @@ serviceLocator.register('gameService', (serviceLocator) => {
 serviceLocator.register('gameController', (serviceLocator) => {
   const logger = serviceLocator.get('logger');
   const service = serviceLocator.get('gameService');
-  return new BillController(logger, service);
+  return new GameController(logger, service);
 });
 
 module.exports = serviceLocator;

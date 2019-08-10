@@ -17,7 +17,22 @@ const sessionBody = {
   answer: {
     type: Sequelize.STRING,
     allowNull: false
-  }
+  },
+  sessionCode: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  guesses: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+    defaultValue: []
+  },
+  ended: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  createdAt: Sequelize.DATE,
+  updatedAt: Sequelize.DATE
 };
 
 module.exports = {

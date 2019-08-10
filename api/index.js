@@ -1,11 +1,13 @@
 const dotenv = require('dotenv');
-
 dotenv.config();
+
+const socketIO = require('socket.io');
 const restify = require('restify');
 const plugins = restify.plugins;
 
 const config = require('./config/settings');
 const routes = require('./route/route');
+const socketHandler = require('./route/socket');
 
 // service locator via dependency injection
 const serviceLocator = require('./config/di');
@@ -32,8 +34,15 @@ server.get('/*', restify.plugins.serveStatic({
   default: 'index.html'
 }));
 
+const io = socketIO.listen(server.server);
+io.on('connection', (socket) => {
+  logger.info('a user connected');
+  socketHandler(socket, serviceLocator);
+});
+
 server.listen(config.port, () => {
   logger.info(`${server.name} is listening on port ${config.port}`);
 });
+//    todo: change back to node index.js
 
 module.exports = server;

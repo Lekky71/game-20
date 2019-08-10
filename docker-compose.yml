@@ -2,21 +2,22 @@ version: "3"
 services:
   app:
     build: .
+    links:
+    - postgres
     depends_on:
     - postgres
     environment:
       APP_NAME: game-20
       PORT: 3000
-      PG_HOST: 127.0.0.1
-      PG_PORT: 5432
+      PG_HOST: localhost
+      PG_PORT: 35432
       PG_USERNAME: leke
       PG_PASSWORD: lekeleke
       PG_DATABASE: game-20
-      PG_TABLE_SESSION: table
+      PG_TABLE_SESSION: session
       PG_TABLE_QUESTION: question
     ports:
     - "3000:3000"
-    - "5432:5432"
     volumes:
     - ./api/:/api/
     - ./client/:/client/
@@ -24,5 +25,10 @@ services:
   postgres:
     image: postgres:12-alpine
     environment:
-      PG_USERNAME: leke
-      PG_PASSWORD: lekeleke
+      POSTGRES_USER: leke
+      POSTGRES_PASSWORD: lekeleke
+      POSTGRES_DB: game-20
+    ports:
+    - "35432:5432"
+    volumes:
+    - ./database:/var/lib/postgresql/data

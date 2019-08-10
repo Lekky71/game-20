@@ -9,12 +9,8 @@ const questionBody = {
     allowNull: false
   },
   answer: {
-    type: Sequelize.STRING,
+    type: Sequelize.BOOLEAN,
     allowNull: true
-  },
-  sessionCode: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   }
 };
 
