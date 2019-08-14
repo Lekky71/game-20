@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Login from './views/Login';
-import CreateGame from './views/CreateGame';
-import JoinGame from './views/JoinGame';
+import Login from './views/Login.vue';
+import CreateGame from './views/CreateGame.vue';
+import JoinGame from './views/JoinGame.vue';
 
 Vue.use(Router);
 

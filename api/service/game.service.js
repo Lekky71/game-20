@@ -41,7 +41,7 @@ class GameService {
         .then(session => {
           if (session) {
             if (session.playerOne === params.playerTwo) {
-              message = 'Player names cannot be the same🙅‍♂️, use another name.'
+              message = 'Player names cannot be the same🙅‍️, use another name.'
               return reject(message);
             }
             session.update({playerTwo: params.playerTwo})
