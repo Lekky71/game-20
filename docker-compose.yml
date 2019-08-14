@@ -1,5 +1,21 @@
 version: "3"
+networks:
+  game-20-network:
 services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: leke
+      POSTGRES_PASSWORD: lekeleke
+      POSTGRES_DB: game-20
+    networks:
+    - game-20-network
+    ports:
+    - "35432:5432"
+    volumes:
+    - ./database:/var/lib/postgresql/data
+    restart: always
+
   app:
     build: .
     links:
@@ -9,26 +25,19 @@ services:
     environment:
       APP_NAME: game-20
       PORT: 3000
-      PG_HOST: localhost
-      PG_PORT: 35432
+      PG_HOST: postgres
+      PG_PORT: 5432
       PG_USERNAME: leke
       PG_PASSWORD: lekeleke
       PG_DATABASE: game-20
       PG_TABLE_SESSION: session
       PG_TABLE_QUESTION: question
+    networks:
+    - game-20-network
     ports:
     - "3000:3000"
     volumes:
     - ./api/:/api/
     - ./client/:/client/
-
-  postgres:
-    image: postgres:12-alpine
-    environment:
-      POSTGRES_USER: leke
-      POSTGRES_PASSWORD: lekeleke
-      POSTGRES_DB: game-20
-    ports:
-    - "35432:5432"
-    volumes:
-    - ./database:/var/lib/postgresql/data
+    restart: always
+    command: sh start.sh

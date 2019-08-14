@@ -33,6 +33,10 @@ class GameController {
         SocketEmitter.failure(socket, `${param} is required`);
         return false;
       }
+      else if(body[param].length < 3){
+        SocketEmitter.failure(socket, `${param}'s minimum length is 3`);
+        return false;
+      }
     }
     return true
   };

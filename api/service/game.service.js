@@ -18,6 +18,7 @@ class GameService {
       params["sessionCode"] = randomstring.generate(5);
       const saltRounds = 10;
       params.answer = bcrypt.hashSync(params.answer, saltRounds);
+      this.logger.info("about to create");
       this.sessionPostgresHelper.create(params)
         .then(session => {
           this.logger.info("created");
