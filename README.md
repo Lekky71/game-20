@@ -1,6 +1,7 @@
 # game-20
 [![Build Status](https://travis-ci.org/Lekky71/billable-hours.svg?branch=master)](https://travis-ci.org/Lekky71/billable-hours)
  
+TODO: change the docs
 <br/>
 A web application that accepts a timesheet (in csv format) as input and automatically generates invoices for each company
 <br/>
