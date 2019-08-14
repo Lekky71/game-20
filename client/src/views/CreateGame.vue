@@ -9,13 +9,14 @@
                required/>
         <input class="auth-input margin-top-10" v-model="game.hint" placeholder="Optional Hint"
                minlength="3"/>
-        <input class="margin-top-10" style="color: white" type="submit" value="START GAME">
+        <input class="auth-submit-button margin-top-10" style="color: white" type="submit" value="START GAME">
       </p>
     </form>
   </div>
 </template>
 <script>
   import io from 'socket.io-client';
+  import router from '../router'
 
   export default {
     name: 'CreateGame',
@@ -46,7 +47,8 @@
       this.socket.on('started_game', data => {
         console.log("success");
         console.log(data.body);
-        alert(data.body);
+        localStorage.name = data.body.playerOne;
+        router.push({name: 'game', params: {sessionCode: data.body.sessionCode}});
       });
 
     }

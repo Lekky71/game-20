@@ -1,0 +1,19 @@
+#wrapper {
+    /*display: flex;*/
+}
+#one {
+    /*height: 100%;*/
+}
+#two {
+    /*height: 100%;*/
+}
+
+@media (max-width: 767px) {
+
+    #one {
+        visibility: hidden;
+    }
+    #two {
+
+    }
+}

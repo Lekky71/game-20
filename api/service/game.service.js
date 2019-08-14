@@ -13,6 +13,14 @@ class GameService {
     this.questionPostgresHelper = new PostgresHelper(Question);
   }
 
+  getGame(params) {
+    return new Promise((resolve, reject) => {
+      this.sessionPostgresHelper.getGameSessionByCode(params.sessionCode)
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+    });
+  }
+
   startGame(params) {
     return new Promise((resolve, reject) => {
       params["sessionCode"] = randomstring.generate(5);
@@ -165,7 +173,7 @@ class GameService {
 
             this.questionPostgresHelper.get({id: params.questionId})
               .then(question => {
-                if(question.answer !== null){
+                if (question.answer !== null) {
                   message = 'already answered';
                   return reject(message);
                 }

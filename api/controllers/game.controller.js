@@ -111,6 +111,24 @@ class GameController {
     }
   };
 
+//  Get Game Data
+  requestGameData(req, res) {
+    if(!req.params){
+      return Response.failure(res, {message: 'sessionCode is required'}, HttpStatus.BAD_REQUEST);
+    }
+    const { sessionCode } = req.params;
+    if(!sessionCode){
+      return Response.failure(res, {message: 'sessionCode is required'}, HttpStatus.BAD_REQUEST);
+    }
+    this.gameService.getGame({ sessionCode })
+      .then(session => {
+        return Response.success(res, {message: session}, HttpStatus.ACCEPTED);
+      })
+      .catch(error => {
+        return Response.failure(res, {message: "An error occurred, please try again later"}, HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+  };
+
 }
 
 module.exports = GameController;

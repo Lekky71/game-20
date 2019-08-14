@@ -26,36 +26,42 @@ const routes = function routes(server, serviceLocator) {
   const joinGameParams = ["name", "sessionCode"];
   const answerQuestionParams = ["name", "sessionCode", "answer"];
 
-  server.post({
-    path: `${mainPath}/start`,
-    name: 'Player one starts a game session',
+  server.get({
+    path: `${mainPath}/game/:sessionCode`,
+    name: 'Get game data',
     version: '1.0.0'
-  }, validateEndpoint(createGameParams), (req, res) => gameController.startGameSession(req, res));
+  }, (req, res) => gameController.requestGameData(req, res));
 
-  server.post({
-    path: `${mainPath}/join`,
-    name: 'Player two joins the game session',
-    version: '1.0.0'
-  }, validateEndpoint(joinGameParams), (req, res) => gameController.joinGameSession(req, res));
+ // server.post({
+ //    path: `${mainPath}/start`,
+ //    name: 'Player one starts a game session',
+ //    version: '1.0.0'
+ //  }, validateEndpoint(createGameParams), (req, res) => gameController.startGameSession(req, res));
 
-  server.post({
-    path: `${mainPath}/answer`,
-    name: 'Player two sends an answer',
-    version: '1.0.0'
-  }, validateEndpoint(answerQuestionParams), (req, res) => gameController.receiveFile(req, res));
-
-  server.post({
-    path: `${mainPath}/ask_question`,
-    name: 'Player two sends an answer',
-    version: '1.0.0'
-  }, (req, res) => gameController.receiveFile(req, res));
-
-  server.post({
-    path: `${mainPath}/answer_question`,
-    name: 'Player two sends an answer',
-    version: '1.0.0'
-  }, (req, res) => gameController.receiveFile(req, res));
-
+  // server.post({
+  //   path: `${mainPath}/join`,
+  //   name: 'Player two joins the game session',
+  //   version: '1.0.0'
+  // }, validateEndpoint(joinGameParams), (req, res) => gameController.joinGameSession(req, res));
+  //
+  // server.post({
+  //   path: `${mainPath}/answer`,
+  //   name: 'Player two sends an answer',
+  //   version: '1.0.0'
+  // }, validateEndpoint(answerQuestionParams), (req, res) => gameController.receiveFile(req, res));
+  //
+  // server.post({
+  //   path: `${mainPath}/ask_question`,
+  //   name: 'Player two sends an answer',
+  //   version: '1.0.0'
+  // }, (req, res) => gameController.receiveFile(req, res));
+  //
+  // server.post({
+  //   path: `${mainPath}/answer_question`,
+  //   name: 'Player two sends an answer',
+  //   version: '1.0.0'
+  // }, (req, res) => gameController.receiveFile(req, res));
+  //
 
 };
 

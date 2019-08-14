@@ -3,6 +3,14 @@ dotenv.config();
 
 const socketIO = require('socket.io');
 const restify = require('restify');
+const  corsMiddleware = require("restify-cors-middleware");
+
+const cors = corsMiddleware({
+  origins: ["*"],
+  allowHeaders: ["Authorization"],
+  exposeHeaders: ["Authorization"]
+});
+
 const plugins = restify.plugins;
 
 const config = require('./config/settings');
@@ -16,7 +24,8 @@ const server = restify.createServer({
   name: config.appName,
   versions: ['1.0.0']
 });
-
+server.pre(cors.preflight);
+server.use(cors.actual);
 // set API version and allow trailing slashes
 server.pre(restify.pre.sanitizePath());
 

@@ -8,13 +8,14 @@
                minlength="3" required/>
         <input class="auth-input margin-top-10" v-model="game.name" placeholder="Name"
                minlength="3" required/>
-        <input class="margin-top-10" style="color: white" type="submit" value="JOIN GAME">
+        <input class="auth-submit-button margin-top-10" style="color: white" type="submit" value="JOIN GAME">
       </p>
     </form>
   </div>
 </template>
 <script>
   import io from 'socket.io-client';
+  import router from '../router'
 
   export default {
     name: 'CreateGame',
@@ -44,7 +45,8 @@
       this.socket.on('joined_game', data => {
         console.log("success");
         console.log(data.body);
-        alert(data.body);
+        localStorage.name = data.body.playerTwo;
+        router.push({name: 'game', params: {sessionCode: data.body.sessionCode}});
       });
 
     }

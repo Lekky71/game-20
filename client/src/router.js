@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from './views/Login.vue';
 import CreateGame from './views/CreateGame.vue';
 import JoinGame from './views/JoinGame.vue';
+import Game from './views/Game.vue';
 
 Vue.use(Router);
 
@@ -22,6 +23,12 @@ export default new Router({
       path: '/join',
       name: 'join',
       component: JoinGame,
+    },
+    {
+      path: '/game/:sessionCode',
+      name: 'game',
+      component: Game,
+      props: true
     },
     {
       path: '/about',
