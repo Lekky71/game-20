@@ -1,3 +1,13 @@
+html {
+    height: 100%;
+}
+#app {
+    height: 100%;
+}
+body {
+    background-color: #333333;
+    height: 100%;
+}
 .auth-box {
     position: absolute;
     width: 300px;
@@ -6,10 +16,19 @@
     left: 47%;
     margin-top: -150px;
     margin-left: -150px;
-    background: white;
     box-shadow: #333333;
+    color: white;
 }
+.content-box {
+    background-color: #272727;
+    padding-top: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 50px;
+    border-color: #14A76C;
+    height: 100%;
 
+}
 .welcome-box {
     position: absolute;
     height: 300px;
@@ -17,8 +36,8 @@
     left: 38%;
     margin-top: -150px;
     margin-left: -150px;
-    background: white;
     box-shadow: #333333;
+    color: white;
 }
 
 @media only screen and (max-width: 400px) {
@@ -62,17 +81,17 @@
     font-weight: normal;
     color: white;
     text-align: center;
-    background: #3CB371;
-    border: #3CB371;
+    background: #14A76C;
+    border: #272727;
     border-radius: 3px;
     outline: 0;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
-    background-image: -webkit-linear-gradient(top, #3CB371, #3CB371);
-    background-image: -moz-linear-gradient(top, #3CB371, #3CB371);
-    background-image: -o-linear-gradient(top, #3CB371, #3CB371);
-    background-image: linear-gradient(to bottom, #3CB371, #3CB371);
+    background-image: -webkit-linear-gradient(top, #14A76C, #14A76C);
+    background-image: -moz-linear-gradient(top, #14A76C, #14A76C);
+    background-image: -o-linear-gradient(top, #14A76C, #14A76C);
+    background-image: linear-gradient(to bottom, #14A76C, #14A76C);
     font-family: "Lithos Pro", serif;
 }
 
@@ -82,15 +101,15 @@
     width: 270px;
     height: 70px;
     color: white;
-    background: #3CB371;
+    background: #14A76C;
     font-size: 18px;
-    border: 1px solid #3CB371;
+    border: 1px solid #14A76C;
     border-radius: 2px;
-    outline: 0 solid #3CB371;
+    outline: 0 solid #14A76C;
     text-align: center;
     -moz-outline-radius: 3px;
-    -webkit-box-shadow: inset 0 1px 3px #3CB371;
-    box-shadow: inset 0 1px 3px #3CB371;
+    -webkit-box-shadow: inset 0 1px 3px #14A76C;
+    box-shadow: inset 0 1px 3px #14A76C;
 }
 
 .margin-top-10 {
@@ -98,11 +117,26 @@
 }
 
 .hint-body {
-    background-color: #4CAF50;
-    margin-bottom: 10px;
+    background-color: #272727;
+    margin-bottom: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-right: 0;
+    color: white;
+    font-size: 17px;
 }
 .hint-answer-button {
+    width: 50px;
+    /*margin-left: 5px;*/
+    font-size: 12px;
+    text-align: center;
+    justify-self: center;
+    background-color: #14A76C;
+    border: #14A76C;
+}
 
+.ask-hint-body {
+
+    /*position:absolute;*/
+    /*bottom:0;*/
 }

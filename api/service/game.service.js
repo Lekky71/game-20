@@ -24,8 +24,10 @@ class GameService {
   startGame(params) {
     return new Promise((resolve, reject) => {
       params["sessionCode"] = randomstring.generate(5);
-      const saltRounds = 10;
-      params.answer = bcrypt.hashSync(params.answer, saltRounds);
+      // Removed hashing because the word needs to be shown on playerOne's page.
+      // const saltRounds = 10;
+      // params.answer = bcrypt.hashSync(params.answer, saltRounds);
+
       this.logger.info("about to create");
       this.sessionPostgresHelper.create(params)
         .then(session => {
@@ -82,7 +84,7 @@ class GameService {
             if (session.ended) {
               return resolve(this.sessionPostgresHelper.getGameSessionByCode(session.sessionCode));
             }
-            else if (bcrypt.compareSync(params.answer, session.answer)) {
+            else if (params.answer.toLowerCase() === session.answer.toLowerCase()) {
               session.ended = true;
               session.correct = true;
             }
