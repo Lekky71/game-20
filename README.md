@@ -1,5 +1,5 @@
 # game-20
- ####TO RUN
+ ##TO RUN
  - Start Docker on your machine
  - Open your terminal
  - ``cd`` into the project directory
@@ -19,13 +19,13 @@
  docker-compose down
  ```
  The app runs on port `3000`.
- #####CHALLENGES FACED
+ ##CHALLENGES FACED
  I wrote on how I solved a rare NodeJs bug I encountered [here on Medium](https://medium.com/hacktive-devs/the-bcrypt-bg-on-docker-9bc36cc7f684?source=friends_link&sk=465b211fe1e66ba6d7c4d75960d87bd9).
  
- #####IMPLEMENTATION
+ ##IMPLEMENTATION
  The live feature was implemented with socket.io
  
- #####SERVER EVENTS
+ ##SERVER EVENTS
  - start
  <br/>
  
@@ -37,8 +37,7 @@
  }
  ```
 
- 
- ######Event emitted from server if successful is ``started_game``
+ Event emitted from server if successful is ``started_game``
 
 - join
  <br/>
@@ -49,7 +48,7 @@
    "sessionCode": "fr5w3"
  }
  ```
- ######Event emitted from server if successful is ``joined_game``
+ Event emitted from server if successful is ``joined_game``
  
 - answer
  <br/>
@@ -61,11 +60,10 @@
    "answer": "book",
  }
  ```
-  ######Event emitted from server if successful is ``answer_received``
+ Event emitted from server if successful is ``answer_received``
   
 - ask_question
  <br/>
-
  ```
  {
     "name": "olu",
@@ -73,7 +71,7 @@
     "question": "is it a common word?",
   }
  ```
- ######Event emitted from server if successful is ``hint_question_received``
+Event emitted from server if successful is ``hint_question_received``
  
 - answer_question
  <br/>
@@ -86,9 +84,9 @@
    "questionId": 5
  }
  ```
- ######Event emitted from server if successful is ``hint_answer_received``
+ Event emitted from server if successful is ``hint_answer_received``
  
-#####SOCKET SUCCESS
+##SOCKET SUCCESS
 All the emitted success events return this same object
 ```
 {
@@ -135,7 +133,7 @@ All the emitted success events return this same object
   ]
 }
 ```
-#####SOCKET FAILURE
+##SOCKET FAILURE
 For errors, the emitted event is ``failure`` and the object format is
 ```
 {
@@ -143,6 +141,6 @@ For errors, the emitted event is ``failure`` and the object format is
 }
 ```
 
-#####API ENDPOINT
+##API ENDPOINT
 - endpoint to get game session data ``/game_api/game/:sessionCode``
 It returns the same success response as above.
