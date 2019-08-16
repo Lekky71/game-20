@@ -1,7 +1,6 @@
 # game-20
-[![Build Status](https://travis-ci.org/Lekky71/billable-hours.svg?branch=master)](https://travis-ci.org/Lekky71/billable-hours)
- 
- ##TO RUN
+[![Build Status](https://travis-ci.org/Lekky71/game-20.svg?branch=staging)](https://travis-ci.org/Lekky71/game-20) 
+ ####TO RUN
  Start Docker on your machine and run the following 
  ```
  docker build .
@@ -11,10 +10,10 @@
  ```
  The app runs on port `3000`.
  
- #IMPLEMENTATION
+ #####IMPLEMENTATION
  The live feature was implemented with socket.io
  
- #SERVER EVENTS
+ #####SERVER EVENTS
  - start
  <br/>
  
@@ -132,6 +131,6 @@ For errors, the emitted event is ``failure`` and the object format is
 }
 ```
 
-####API ENDPOINT
+#####API ENDPOINT
 - endpoint to get game session data ``/game_api/game/:sessionCode``
 It returns the same success response as above.
