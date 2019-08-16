@@ -1,15 +1,26 @@
 # game-20
  ####TO RUN
- Start Docker on your machine and run the following 
+ - Start Docker on your machine
+ - Open your terminal
+ - ``cd`` into the project directory
+ - Do the following:
+ 
+ To build: 
  ```
  docker build .
  ```
+ To start the app:
  ```
  docker-copmose up 
  ```
+ 
+ To stop the containers
+ ```
+ docker-compose down
+ ```
  The app runs on port `3000`.
  #####CHALLENGES FACED
- I wrote on how I solved a rare bug I encountered [here on Medium](https://medium.com/hacktive-devs/the-bcrypt-bg-on-docker-9bc36cc7f684?source=friends_link&sk=465b211fe1e66ba6d7c4d75960d87bd9).
+ I wrote on how I solved a rare NodeJs bug I encountered [here on Medium](https://medium.com/hacktive-devs/the-bcrypt-bg-on-docker-9bc36cc7f684?source=friends_link&sk=465b211fe1e66ba6d7c4d75960d87bd9).
  
  #####IMPLEMENTATION
  The live feature was implemented with socket.io
