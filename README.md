@@ -27,8 +27,6 @@
  
 ### SERVER EVENTS
  - start
- <br/>
- 
  ```
  {
    "name": "leke",
@@ -39,9 +37,7 @@
 
  Event emitted from server if successful is ``started_game``
 
-- join
- <br/>
- 
+- join 
  ```
  {
    "name": "olu",
@@ -50,9 +46,7 @@
  ```
  Event emitted from server if successful is ``joined_game``
  
-- answer
- <br/>
- 
+- answer 
  ```
  {
    "name": "olu",
@@ -62,9 +56,7 @@
  ```
  Event emitted from server if successful is ``answer_received``
   
-- ask_question
- <br/>
- ```
+- ask_question ```
  {
     "name": "olu",
     "sessionCode": "fr5w3",
@@ -74,8 +66,6 @@
 Event emitted from server if successful is ``hint_question_received``
  
 - answer_question
- <br/>
-
  ```
  {
    "name": "leke",
