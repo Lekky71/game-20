@@ -1,5 +1,4 @@
 # game-20
-[![Build Status](https://travis-ci.org/Lekky71/game-20.svg?branch=staging)](https://travis-ci.org/Lekky71/game-20) 
  ####TO RUN
  Start Docker on your machine and run the following 
  ```
