@@ -50,10 +50,10 @@ class GameService {
       this.sessionPostgresHelper.get(query)
         .then(session => {
           if (session) {
-            if (session.playerOne === params.playerTwo) {
-              message = 'Player names cannot be the same🙅‍️, use another name.'
-              return reject(message);
-            }
+            // if (session.playerOne === params.playerTwo) {
+            //   message = 'Player names cannot be the same🙅‍️, use another name.'
+            //   return reject(message);
+            // }
             session.update({playerTwo: params.playerTwo})
               .then(result => {
                 return resolve(this.sessionPostgresHelper.getGameSessionByCode(result.sessionCode));

@@ -1,5 +1,3 @@
-const config = require("../config/settings");
-
 const listeners = (io, socket, serviceLocator) => {
   // Get an instance of the controller
   const gameController = serviceLocator.get('gameController');
@@ -15,9 +13,6 @@ const listeners = (io, socket, serviceLocator) => {
 
   socket.on('answer_question', (body) => gameController.receiveHintAnswer(io, socket, body));
 
-
-  // todo: implementing returning game data
-  // socket.on('get_game_session', (body) => gameController.handleEndpoint(socket, body, [], gameController.receiveHintAnswer));
 };
 
 module.exports = listeners;

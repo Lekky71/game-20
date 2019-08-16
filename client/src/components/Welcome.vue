@@ -6,10 +6,15 @@
   </div>
 </template>
 <script>
-
+  import router from '../router'
   export default {
     name: 'Welcome',
     components: {},
+    mounted(){
+      if(localStorage.sessionCode){
+        router.push({name: 'game', params: {sessionCode: localStorage.sessionCode}})
+      }
+    }
   };
 </script>
 <style scoped>

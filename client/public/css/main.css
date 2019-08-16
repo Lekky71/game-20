@@ -6,6 +6,7 @@ html {
 }
 body {
     background-color: #333333;
+
     height: 100%;
 }
 .auth-box {
@@ -23,8 +24,9 @@ body {
     background-color: #272727;
     padding-top: 10px;
     border-radius: 5px;
-    margin-left: 10px;
-    margin-right: 50px;
+    border-width: 2px;
+    /*margin-left: 10px;*/
+    /*margin-right: 50px;*/
     border-color: #14A76C;
     height: 100%;
 
@@ -134,7 +136,9 @@ body {
     background-color: #14A76C;
     border: #14A76C;
 }
-
+.label-text {
+    color: white;
+}
 .ask-hint-body {
 
     /*position:absolute;*/

@@ -6,7 +6,7 @@
       <p>
         <input class="auth-input" v-model="game.sessionCode" placeholder="Game Session Code"
                minlength="3" required/>
-        <input class="auth-input margin-top-10" v-model="game.name" placeholder="Name"
+        <input class="auth-input margin-top-10" v-model="game.name" placeholder="Your name"
                minlength="3" required/>
         <input class="auth-submit-button margin-top-10" style="color: white" type="submit" value="JOIN GAME">
       </p>
@@ -25,7 +25,7 @@
           name: '',
           sessionCode: ''
         },
-        socket: io('localhost:3000')
+        socket: io('/')
       };
     },
     methods: {
@@ -37,16 +37,15 @@
     },
     mounted() {
       this.socket.on('failure', data => {
-        console.log("failure");
         console.log(data);
         alert(data.error);
       });
 
       this.socket.on('joined_game', data => {
-        console.log("success");
-        console.log(data.body);
-        localStorage.name = data.body.playerTwo;
-        router.push({name: 'game', params: {sessionCode: data.body.sessionCode}});
+        const session = data.body.session;
+        localStorage.sessionCode = session.sessionCode;
+        localStorage.name = (data.body.isPlayerOne === true) ? session.playerOne : session.playerTwo;
+        router.push({name: 'game', params: {sessionCode: session.sessionCode}});
       });
 
     }

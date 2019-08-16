@@ -3,7 +3,7 @@
     <p style=" font-size: 20px">Create Game</p>
     <form class="auth-form" @submit.prevent="createGameSession">
       <p>
-        <input class="auth-input" v-model="game.name" placeholder="Name" minlength="3" required/>
+        <input class="auth-input" v-model="game.name" placeholder="Your name" minlength="3" required/>
         <input class="auth-input margin-top-10" v-model="game.answer" placeholder="The Game Word"
                minlength="3"
                required/>
@@ -27,7 +27,7 @@
           answer: '',
           hint: ''
         },
-        socket: io('localhost:3000')
+        socket: io('/')
       };
     },
     methods: {
@@ -46,9 +46,11 @@
 
       this.socket.on('started_game', data => {
         console.log("success");
-        console.log(data.body);
-        localStorage.name = data.body.playerOne;
-        router.push({name: 'game', params: {sessionCode: data.body.sessionCode}});
+        const session = data.body;
+        localStorage.sessionCode = session.sessionCode;
+
+        localStorage.name = session.playerOne;
+        router.push({name: 'game', params: {sessionCode: session.sessionCode}});
       });
 
     }

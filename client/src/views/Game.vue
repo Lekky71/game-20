@@ -1,9 +1,10 @@
 <template>
-  <div class="row h-100" style="padding-top: 10px;">
-    <div v-bind:class="{'col-6': true, 'selected-header': showHintsPage}" @click="navigate('hints')"><h4>HINTS</h4>
+  <div class="row" style="padding-top: 10px; margin: auto;">
+    <div v-bind:class="{'col-6': true, 'selected-header': showHintsPage, 'label-text': true}" style="color: white" @click="navigate('hints')"><h4>HINTS</h4>
     </div>
-    <div v-bind:class="{'col-6': true, 'selected-header': showGuessesPage}" @click="navigate('play')"><h4>PLAY</h4>
+    <div v-bind:class="{'col-6': true, 'selected-header': showGuessesPage, 'label-text': true}" @click="navigate('play')"><h4>PLAY</h4>
     </div>
+    <div v-if="otherPlayer !== ''" class="container label-text" style="margin-bottom: 10px;">Other player: {{otherPlayer}}</div>
     <div
       v-bind:class="{ 'col-sm-6': true, 'unselected': !showHintsPage, 'selected': showHintsPage }">
       <HintSection class="content-box" :game="game" v-on:question-asked="sendHintQuestion"
@@ -14,6 +15,8 @@
       v-bind:class="{ 'col-sm-6': true, 'unselected': !showGuessesPage, 'selected': showGuessesPage }">
       <Play class="content-box" :game="game" v-on:answer-sent="sendGameAnswer" :is-player-one="isPlayerOne"/>
     </div>
+
+    <button v-on:click="logoutUser" id="logoutButton" title="Logout"><i class="fa fa-sign-out" style="font-size:24px"></i></button>
   </div>
 </template>
 <script>
@@ -21,6 +24,7 @@
   import axios from 'axios';
   import HintSection from '../components/HintSection.vue'
   import Play from '../components/Play.vue'
+  import router from '../router'
 
   export default {
     name: 'Game',
@@ -31,10 +35,11 @@
     data() {
       return {
         game: {},
-        socket: io('localhost:3000'),
+        socket: io('/'),
         isPlayerOne: false,
         showHintsPage: true,
-        showGuessesPage: false
+        showGuessesPage: false,
+        otherPlayer: ''
       };
     },
     props: ['sessionCode'],
@@ -45,7 +50,6 @@
       },
       navigate(action) {
         const width = window.innerWidth;
-        console.log(width);
         switch (action) {
           case 'hints': {
             this.showHintsPage = true;
@@ -64,10 +68,12 @@
         this.socket.emit('start', this.game);
       },
       getGameByCode(code) {
-        const url = `http://127.0.0.1:3000/game_api/game/${code}`;
+        const url = `/game_api/game/${code}`;
         return axios.get(url).then(response => {
           this.game = response.data.message;
-          this.isPlayerOne = localStorage.name === this.game.playerOne
+          this.isPlayerOne = localStorage.name === this.game.playerOne;
+          this.otherPlayer = this.isPlayerOne ? this.game.playerTwo : this.game.playerOne;
+          this.handleSocketResponse(this.game);
         });
       },
       sendHintQuestion(question) {
@@ -76,23 +82,35 @@
       sendHintAnswer(info) {
         const [questionId, answer] = info;
         const body = {questionId, name: localStorage.name, sessionCode: this.sessionCode, answer};
-        console.log(body);
         this.socket.emit('answer_question', body);
       },
       sendGameAnswer(answer) {
         const body = {name: localStorage.name, sessionCode: this.sessionCode, answer};
-        console.log(body);
         this.socket.emit('answer', body);
       },
       handleSocketResponse(session){
         this.game = session;
-        if(session.ended === true){
-          alert("Session has ended");
+        if (this.playerOne === false) {
+          if (this.game.correct) {
+            alert(`You win!!\nThe guess word was ${this.game.answer}`);
+          }
+          else if(this.game.ended){
+            alert(`Game session has ended`);
+          }
         }
+        else {
+          if(this.game.ended){
+            alert(`Game session has ended`);
+          }
+        }
+      },
+      logoutUser(){
+        localStorage.removeItem('name');
+        localStorage.removeItem('sessionCode');
+        router.push({name: 'home'});
       }
     },
     mounted() {
-      console.log(this.sessionCode);
       this.getGameByCode(this.sessionCode);
 
       this.socket.on('failure', data => {
@@ -115,11 +133,6 @@
       this.socket.on('answer_received', data => {
         console.log("answer_received");
         this.handleSocketResponse(data.body);
-        if (!this.playerOne) {
-          if (this.game) {
-
-          }
-        }
       });
 
     }

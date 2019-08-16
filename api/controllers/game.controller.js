@@ -11,7 +11,9 @@ class GameController {
     this.answerQuestionParams = ["name", "sessionCode", "answer"];
     this.hintQuestionParams = ["name", "sessionCode", "question"];
     this.hintAnswerParams = ["name", "sessionCode", "questionId", "answer"];
+
   }
+
 
   // a generic function to validate input for an event
   /**
@@ -61,7 +63,8 @@ class GameController {
       this.gameService.joinGame({playerTwo: name, sessionCode})
         .then(session => {
           socket.join(sessionCode);
-          SocketEmitter.roomEmit(io, sessionCode, 'joined_game', session);
+          const isPlayerOne = (name === session.playerOne);
+          SocketEmitter.roomEmit(io, sessionCode, 'joined_game', { session: session, isPlayerOne });
         })
         .catch(error => {
           SocketEmitter.failure(socket, error);
