@@ -13,6 +13,8 @@ const listeners = (io, socket, serviceLocator) => {
 
   socket.on('answer_question', (body) => gameController.receiveHintAnswer(io, socket, body));
 
+  socket.on('game_data', (body) => gameController.getGameData(io, socket, body));
+
 };
 
 module.exports = listeners;

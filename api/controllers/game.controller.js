@@ -11,7 +11,7 @@ class GameController {
     this.answerQuestionParams = ["name", "sessionCode", "answer"];
     this.hintQuestionParams = ["name", "sessionCode", "question"];
     this.hintAnswerParams = ["name", "sessionCode", "questionId", "answer"];
-
+    this.getGameParams = ["sessionCode"];
   }
 
 
@@ -107,6 +107,20 @@ class GameController {
         .then(session => {
           socket.join(sessionCode);
           SocketEmitter.roomEmit(io, sessionCode, 'hint_answer_received', session);
+        })
+        .catch(error => {
+          SocketEmitter.failure(socket, error);
+        })
+    }
+  };
+
+  getGameData(io, socket, body) {
+    if (this.validateEndpoint(socket, body, this.getGameParams)) {
+      const { sessionCode } = body;
+      this.gameService.getGame({ sessionCode })
+        .then(session => {
+          socket.join(sessionCode);
+          SocketEmitter.roomEmit(io, sessionCode, 'game_data_received', session);
         })
         .catch(error => {
           SocketEmitter.failure(socket, error);

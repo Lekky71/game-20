@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const randomstring = require("randomstring");
 const config = require("../config/settings");
 const Session = require('../models/session').Session;

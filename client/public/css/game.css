@@ -55,7 +55,7 @@
     display: block;
     position: fixed;
     bottom: 22px;
-    left: 30px;
+    right: 20px;
     z-index: 99;
     font-family: inherit;
     font-size: 18px;
