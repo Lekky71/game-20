@@ -94,13 +94,6 @@
       },
       getGameByCode(code) {
         this.socket.emit('game_data', {sessionCode: code});
-        // const url = `/game_api/game/${code}`;
-        // return axios.get(url).then((response) => {
-        //   this.game = response.data.message;
-        //   this.isPlayerOne = localStorage.name === this.game.playerOne;
-        //   this.otherPlayer = this.isPlayerOne ? this.game.playerTwo : this.game.playerOne;
-        //   this.handleSocketResponse(this.game);
-        // });
       },
       sendHintQuestion(question) {
         this.socket.emit('ask_question', {question, name: localStorage.name, sessionCode: this.sessionCode});
