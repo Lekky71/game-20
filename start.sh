@@ -3,7 +3,7 @@
 #npm install
 ## Build the Vue project
 #npm run build
-cd ../api
+cd api
 # start the API server
 npm install
 echo "Starting API server"
